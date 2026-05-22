@@ -1,0 +1,39 @@
+                                                Mouse Evadare
+
+
+Game Type : 2D
+Game Style: Pixel Art 
+Game Inputs : Only Mouse 
+
+Idee generala :
+    Te spaunezi in interiorul unei mape fixe , ca si dimensiune . Tu esti un singur patrat 
+    care te misti doar prin inputurile de la mouse , mai exact left-click . 
+    Inamici se splawneaza random din afara maperi si vin spre tine sa te vaneze sa te atace 
+    LA inceput inamici vor folosi doar mele atack , dar pe parcurs dupa ce prinzi ideea jocului 
+    vor incepe sa foloseasca si proiectile de distanta , si sau magie .
+
+    Cum ii ucizi tu ?
+        -Scopul tau este sa te lovesti de ei , astfel dandule damage , doar ca si tu ai sa-ti iei 
+        damage la randul tau , deoarece si ei te ataca pe tine . Insa , inamici o sa apara in diferite 
+        dimensiuni , iar inamici mai mici vor da mai putin damage decat inamici cei mai mari .
+        -Pe mapa vor apara random la intervale random de timp diverse obiecte de heal , pentru ati 
+        putea regenra viata . Faptul ca apare la diverse perioade de timp , si locati random asta ,
+        te poate pune intr-o situatie dificila in care nu mai ai deloc hp si trebuie sa eviti ori ce 
+        inamic si atacurile sale pentru a nu fii eliminat .
+
+    Scopul Jocului ?
+        => Obtinerea unui scor cat mai mare 
+
+    Alte ideei:
+        Jocul va avea pe fundal melodi , de preferat ai-ul va actiona pe vibeul melodiilor de fundal 
+        Playerul va avea abiliati pe care le va putea folosi , toate sub dizain de carti de joc , 
+            dintre care 3 carti vor fii permanente , gen healing , sau alte tipuri de carti 
+            Simultan va avea un deck de carti fiecare avand o abilitate imparte , dar nu vei putea folosi ori ce carte doresti 
+            fiecare carte imparte va necesita un numar de puncre pe care le obtii omorand inamici 
+
+        Ideei probabil de nerealizat dar cool:
+            In tinpul melodiilor in functie de fiecare melodie imparte sa creez efecte speciale vizuale folosidn shadere 
+            Rotirea camerei in anumite directi in functie de melodie 
+            Level editor pentru a putea creea ori cine vreun nivel 
+            Ai editor , care sa cusotmizeze comportamentul ai-uli pentru ori ce nivel imaprte creat de user 
+            Comportamentul ai-ului sa fie dependent de melodie imparte (irealizabil deoarece , trebuie modificat ai-ul pentru fiecare melodie imparte cea ce este mult de munca pentru mai mult de un singur nivel)
