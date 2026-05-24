@@ -5,7 +5,11 @@ Vector2 MousePos = {0,0};
 float Interati_in_PlayerMove = 0 ;
 
 void DrawPlayer(Entity * player){
-    DrawRectangle(player->Pos.x , player->Pos.y  , player->Size.x , player->Size.y , player->Color);
+    DrawRectangle(player->Pos.x , player->Pos.y  , player->Size.x , player->Size.y , player->_Color);
+    if(Debug_Mode){
+        //PrintEntityInfo(player);
+    }
+
 }
 void PlayerMove(Entity * player){
     float dt = GetFrameTime();
@@ -32,7 +36,7 @@ void PlayerMove(Entity * player){
 
         // Dacă suntem foarte aproape de țintă (sub 2 pixeli), ne oprim ca să evităm tremuratul (jitter)
         if (distance < 2.0f) {
-            player->Pos = MousePos    ;
+            SetEntityPos(player, MousePos)   ;
             player->IsMoving = false;
         } else {
             // Obținem direcția (Vector2Normalize face automat împărțirea la lungime în siguranță)
@@ -41,16 +45,14 @@ void PlayerMove(Entity * player){
 
             // Modificăm poziția: NouaPoz = VecheaPoz + Directie * Viteza * DeltaTime
             Vector2 velocity = Vector2Scale(direction, player->Speed * dt);
-            player->Pos = Vector2Add(player->Pos, velocity);
+            SetEntityPos(player ,  Vector2Add(player->Pos, velocity));
         }
     }
 }
-Vector2 GetPlayerPos(Entity * player){ return player->Pos;}
-
 void InitPlayer(Entity * player){
     //Setam entitatea ca fiind o entitate de tip player 
     player->type = EntityType::ENTITY_PLAYER;
-    player->Color = _Player_Color;
+    player->_Color = _Player_Color;
     player->Pos = {WindowLenght / 2 , WindowHeight / 2};
     player->HP = 100;
     player->Damage = 15;
@@ -59,3 +61,5 @@ void InitPlayer(Entity * player){
     player->StilAlive = true;
 
 }
+
+

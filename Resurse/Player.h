@@ -10,5 +10,3 @@ void DrawPlayer(Entity * player);
 //Functia necesara pentru miscarea playerului 
 void PlayerMove(Entity * player);
 
-//Returneaza pozitia playerului 
-Vector2 GetPlayerPos(Entity * player);

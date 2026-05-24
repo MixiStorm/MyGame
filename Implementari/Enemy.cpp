@@ -1,10 +1,15 @@
 #include"Enemy.h"
+#include "Ententy.h"
 
 void DrawEnemy(EnemyManager * manager){
     for(int i = 0 ; i < manager->count ; i++){
         Entity * e = &manager->Enemys[i];
         if(e->StilAlive)
-            DrawRectangle(e->Pos.x , e->Pos.y , e->Size.x ,e->Size.y , e->Color );
+            DrawRectangle(e->Pos.x , e->Pos.y , e->Size.x ,e->Size.y , e->_Color );
+            if(Debug_Mode){
+                PrintEntityInfo(e);
+
+            }
     }
 }
 
@@ -25,8 +30,12 @@ Vector2 GetEnemyPos(EnemyManager * manager , int index){
     return manager->Enemys[index].Pos;
 }
 void SpawnEnemy(EnemyManager * manager){
-    printf("Sa spawnat un nou winamic \n");
+    if(Debug_Mode){
+        if(!Enemy_Spwning) return;
+    }
     if(manager->count >= Enemy_Max_Count_Cap) return;
+    printf("Sa spawnat un nou winamic \n");
+    
     Entity  enemy ;
     //Initializam cu valori de baza inamici la spown
     InitEnemy(&enemy);
@@ -52,7 +61,8 @@ void SpawnEnemy(EnemyManager * manager){
 
     enemy.StilAlive = true;
     enemy.Size = {(float)Size , (float)Size};
-    enemy.Pos = Pos;
+    //enemy.Pos = Pos;
+    SetEntityPos(&enemy , Pos);
 
     enemy.Damage = Size  * 0.6;
     enemy.HP = Size ;
@@ -63,14 +73,13 @@ void SpawnEnemy(EnemyManager * manager){
     manager->count++;
 }
 
-void UpdateEnemy(EnemyManager * manager , Vector2 Player_Pos){
+void UpdateEnemy(EnemyManager * manager , Vector2 Target){
     if(manager->count == 0) return;
     float dt = GetFrameTime();
 
     Entity * guy = nullptr;
     for(int i = 0 ; i < manager->count; i++){
         guy = &manager->Enemys[i];
-        Vector2 Target = {Player_Pos.x  - guy->Size.x / 2 ,Player_Pos.y - guy->Size.y / 2}  ; //Temporar facem asta , va trebui sa schimb mai tarziu ca sa verific coliziunile 
         //========LIFE===========
         if(guy->HP <= 0){
             DelletEnemy(manager , i);
@@ -80,42 +89,32 @@ void UpdateEnemy(EnemyManager * manager , Vector2 Player_Pos){
 
 
         //============MoveMent==============
+        Vector2 Target2 = Vector2Subtract(Target , {guy->Size.x / 2 , guy->Size.y / 2}); 
 
         //Calculam directia in care vrem sa ne indreptam 
-        float distance = Vector2Distance(guy->Pos , Target);
+        float distance = Vector2Distance(guy->Pos , Target2);
         
         
         if (distance < 2.0f) {
-            guy->Pos= Target  ; //Temporar facem asta , va trebui sa schimb mai tarziu ca sa verific coliziunile 
+            SetEntityPos(guy , Target2); //Temporar facem asta , va trebui sa schimb mai tarziu ca sa verific coliziunile 
             continue;
         }
         else{
-            Vector2 Directie = Vector2Subtract(Target , guy->Pos);
+            Vector2 Directie = Vector2Subtract(Target2 , guy->Pos);
             Directie = Vector2Normalize(Directie);
 
             Vector2 velocity = Vector2Scale(Directie, guy->Speed * dt);
-            guy->Pos = Vector2Add(guy->Pos , velocity);
+            SetEntityPos(guy , Vector2Add(guy->Pos , velocity));
         }
     }
 
 
 }
-
-
-void PrintEnemyInfo(EnemyManager * manager){
-    printf("Exista %d inamici \n" , manager->count);
-    for(int i = 0 ; i < manager->count ; i++){
-        Entity  e= manager->Enemys[i];
-        printf("Entity [%d] \nPos : x: %f y:%f \n" , i , e.Pos.x , e.Pos.y);
-    }
-
-}
-
 
 void InitEnemy(Entity * enemy){
     //Setam entitatea ca fiind o entitate de tip player 
     enemy->type = EntityType::ENTITY_ENEMY;
-    enemy->Color = _Enemy_Color;
+    enemy->_Color = _Enemy_Color;
     enemy->Pos = {WindowLenght / 2 , WindowHeight / 2};
     enemy->HP = 100;
     enemy->Damage = 15;
@@ -123,3 +122,4 @@ void InitEnemy(Entity * enemy){
     enemy->Size = {40.0f , 40.0f};
     enemy->StilAlive = true;
 }
+
